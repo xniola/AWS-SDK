@@ -56,7 +56,7 @@ def generate_monthly_cost_report(aws_profile, start_date, end_date, granularity,
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Generate Monthly Cost Report")
+    parser = argparse.ArgumentParser(description="Generate Cost Report per Month or Day")
     parser.add_argument("--profile", type=str, required=True, help="AWS CLI profile name")
     parser.add_argument("--start-date", type=str, required=True, help="Start date (YYYY-MM-DD)")
     parser.add_argument("--end-date", type=str, required=True, help="End date (YYYY-MM-DD)")
