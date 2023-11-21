@@ -15,7 +15,7 @@ Generally, you can execute the scripts following this syntax:
 python3 <script_name.py> --profile <aws_profile_name>
 ```
 
-Some scripts require additional arguments like the id of the specific resource to be fetched.
+However, some scripts require additional arguments like the id of the specific resource to be fetched and more.
 
 ## Help
 Using the option -h or --help, you can see all the required arguments for each script:
