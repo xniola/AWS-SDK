@@ -1,0 +1,34 @@
+CPU Metrics:
+- CPUUtilization
+- CPUCreditUsage
+- CPUCreditBalance
+
+Disk Metrics:
+- DiskReadBytes
+- DiskWriteBytes
+- DiskReadOps
+- DiskWriteOps
+
+Network Metrics:
+- NetworkIn
+- NetworkOut
+- NetworkPacketsIn
+- NetworkPacketsOut
+
+Status Check Metrics:
+- StatusCheckFailed
+- StatusCheckFailed_Instance
+- StatusCheckFailed_System
+
+Memory Metrics (if using the CloudWatch agent):
+- mem_used_percent
+- mem_available_percent
+
+Auto Scaling Metrics:
+- GroupDesiredCapacity
+- GroupInServiceInstances
+- GroupPendingInstances
+- GroupTerminatingInstances
+
+Custom Metrics (e.g., user-defined):
+- You can define and query custom metrics based on your specific requirements.

@@ -1,0 +1,29 @@
+CPU Metrics:
+- CPUUtilization
+
+Memory Metrics:
+- FreeableMemory
+- DatabaseConnections
+
+Storage Metrics:
+- FreeStorageSpace
+- ReadIOPS
+- WriteIOPS
+- ReadLatency
+- WriteLatency
+
+Replication Metrics (for Aurora replicas):
+- ReplicaLag
+
+Network Metrics:
+- NetworkReceiveThroughput
+- NetworkTransmitThroughput
+
+Database Engine Metrics (e.g., MySQL, PostgreSQL):
+- Queries
+- Deadlocks
+- CommitLatency
+- RollbackLatency
+
+Custom Metrics (e.g., user-defined):
+- You can define and query custom metrics based on your specific requirements.

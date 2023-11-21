@@ -10,6 +10,7 @@ Just make sure to have the proper permissions in your account to execute the spe
 In **Operations** folder there are some scripts that you should run with caution as they may cause changes to your aws infrastructure  
 
 ## Syntax
+Generally, you can execute the scripts following this syntax:
 ```
 python3 <script_name.py> --profile <aws_profile_name>
 ```
