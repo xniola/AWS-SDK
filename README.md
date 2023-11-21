@@ -7,7 +7,7 @@ In **ReadOnly** folder you will find all the scripts that can be executed withou
 Just make sure to have the proper permissions in your account to execute the specified actions. 
 
 ## Operations folder
-In **Operations** folder there are some scripts that you should run with caution as they may cause changes in the infrastructure  
+In **Operations** folder there are some scripts that you should run with caution as they may cause changes to your aws infrastructure  
 
 ## Syntax
 ```
