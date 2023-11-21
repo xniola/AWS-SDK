@@ -1,3 +1,0 @@
-UAT
-VM-Emerald-OnLine: i-0afc0799ad72d6259
-VM-Emerald-Batch: i-0f2a343f23d0a7ebc
