@@ -48,7 +48,7 @@ def generate_monthly_cost_report(aws_profile, start_date, end_date, granularity,
                     report_file.write("\n")
                                          
         
-        print(f"Monthly cost report saved to '{output_filename}'")
+        print(f"{granularity} cost report saved to '{output_filename}'")
 
     except Exception as e:
         print(f"Error: {e}")
