@@ -28,9 +28,61 @@ python3 <script_name.py> -h
 ```
 
 ## Json output
-The default output format is raw text, but it is possible to view the output in json format using **txt_to_json.py**:
+The default output format is raw text, but it is possible to view the output in json format using the script **txt_to_json.py** provided in this repo:
 ```
 python3 </path/to/script.py> --profile <aws_profile_name> | python3 txt_to_json.py
 ```
 
-The output in json format can be useful and lets you parse and query results with specific tools such as jq
+### Example
+
+Default output:
+```
+$ python3 ReadOnly/Lambda/show_lambdas.py --profile REDACTED
+Function Name: Hello-World
+Runtime: python3.9
+Last Modified: 2023-06-29T09:12:32.558+0000
+Handler: instance_scheduler.main.lambda_handler
+Role: arn:aws:iam::123456789:role/InstanceScheduler-SchedulerRole-1EIU75QVQP8HD
+
+Function Name: MyFunction
+Runtime: python3.11
+Last Modified: 2023-09-29T07:17:50.000+0000
+Handler: lambda_function.lambda_handler
+Role: arn:aws:iam::123456789:role/rdsLambda
+```
+
+
+Json output:
+
+```
+$ python3 ReadOnly/Lambda/show_lambdas.py --profile REDACTED | python3 txt_to_json.py
+[
+  {
+    "Function Name": "Hello-World",
+    "Runtime": "python3.9",
+    "Last Modified": "2023-06-29T09:12:32.558+0000",
+    "Handler": "instance_scheduler.main.lambda_handler",
+    "Role": "arn:aws:iam::123456789:role/InstanceScheduler-SchedulerRole-1EIU75QVQP8HD"
+  },
+  {
+    "Function Name": "myFunction",
+    "Runtime": "python3.11",
+    "Last Modified": "2023-09-29T07:17:50.000+0000",
+    "Handler": "lambda_function.lambda_handler",
+    "Role": "arn:aws:iam::123456789:role/rdsLambda"
+  }
+]
+```
+
+Query Json ouput with jq:
+
+```
+$ python3 ReadOnly/Lambda/show_lambdas.py --profile emerald-uat | txt_to_json | jq '.[] | select(.["Function Name"] == "myFunction")'
+{
+    "Function Name": "myFunction",
+    "Runtime": "python3.11",
+    "Last Modified": "2023-09-29T07:17:50.000+0000",
+    "Handler": "lambda_function.lambda_handler",
+    "Role": "arn:aws:iam::123456789:role/rdsLambda"
+}
+```
