@@ -77,7 +77,7 @@ $ python3 ReadOnly/Lambda/show_lambdas.py --profile REDACTED | python3 txt_to_js
 Query Json ouput with jq:
 
 ```
-$ python3 ReadOnly/Lambda/show_lambdas.py --profile emerald-uat | txt_to_json | jq '.[] | select(.["Function Name"] == "myFunction")'
+$ python3 ReadOnly/Lambda/show_lambdas.py --profile emerald-uat | python3 txt_to_json.py | jq '.[] | select(.["Function Name"] == "myFunction")'
 {
     "Function Name": "myFunction",
     "Runtime": "python3.11",
