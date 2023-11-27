@@ -26,3 +26,11 @@ Using the option -h or --help, you can see all the required arguments for each s
 ```
 python3 <script_name.py> -h
 ```
+
+## Json output
+The default output format is raw text, but it is possible to view the output in json format using **txt_to_json.py**:
+```
+python3 </path/to/script.py> --profile <aws_profile_name> | python3 txt_to_json.py
+```
+
+The output in json format can be useful and lets you parse and query results with specific tools such as jq
