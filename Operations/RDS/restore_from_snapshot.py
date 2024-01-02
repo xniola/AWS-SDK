@@ -1,36 +1,54 @@
+import json
 import boto3
+import os
 
-def restore_rds_snapshot(snapshot_identifier, instance_identifier, subnet_group_name, security_group_ids, engine, instance_class, username, password):
+
+def get_last_system_snapshot(db_identifier):
+    rds_client = boto3.client('rds')
+
+    # Retrieve all snapshots of the specified DB in descending order of creation time
+    response = rds_client.describe_db_snapshots(
+        DBInstanceIdentifier=db_identifier,
+        SnapshotType='automated'
+    )
+
+    snapshots = sorted(response['DBSnapshots'], key=lambda x: x['SnapshotCreateTime'], reverse=True)
+
+    if snapshots:
+        return snapshots[0]['DBSnapshotIdentifier'], snapshots[0]['DBSnapshotArn']
+    else:
+        return None
+
+def restore_rds_snapshot(snapshot_identifier, instance_identifier, instance_class, subnet_group_name, security_group_ids, engine):
     rds_client = boto3.client('rds')
 
     response = rds_client.restore_db_instance_from_db_snapshot(
         DBInstanceIdentifier=instance_identifier,
         DBSnapshotIdentifier=snapshot_identifier,
-        DBSubnetGroupName=subnet_group_name,
-        VpcSecurityGroupIds=security_group_ids,
-        Engine=engine,
         DBInstanceClass=instance_class,
-        MasterUsername=username,
-        MasterUserPassword=password
+        Port=1433,
+        AvailabilityZone='eu-central-1b',
+        DBSubnetGroupName=subnet_group_name,
+        MultiAZ=False,
+        PubliclyAccessible=False,
+        VpcSecurityGroupIds=[security_group_ids],
+        Engine=engine,
+        Iops=2000,
+        OptionGroupName='emerald-db-option-group'
     )
 
-    print(f"Restoring RDS instance {instance_identifier} from snapshot {snapshot_identifier}.")
-    print("Please wait for the restoration to complete.")
+    print(f"Restoring snapshot {snapshot_identifier}.")
 
-    # Optionally, you can wait for the restoration to complete
-    waiter = rds_client.get_waiter('db_instance_available')
-    waiter.wait(DBInstanceIdentifier=instance_identifier)
+def lambda_handler(event, context):
+    # Replace these values with your actual environment variable names
+    db_identifier = os.environ.get('db_identifier')
+    instance_identifier = os.environ.get('instance_identifier')
+    instance_class = os.environ.get('instance_class')
+    subnet_group_name = os.environ.get('subnet_group_name')
+    security_group_ids = os.environ.get('security_group_ids')
+    engine = os.environ.get('engine')
 
-    print(f"RDS instance {instance_identifier} has been successfully restored.")
+    snapshot_identifier, snapshot_arn = get_last_system_snapshot(db_identifier)
 
-# Replace these values with your actual details
-snapshot_identifier = 'your-snapshot-id'
-instance_identifier = 'your-instance-id'
-subnet_group_name = 'your-subnet-group-name'
-security_group_ids = ['sg-xxxxxxxx']
-engine = 'your-db-engine'
-instance_class = 'db.t2.micro'
-username = 'your-db-username'
-password = 'your-db-password'
-
-restore_rds_snapshot(snapshot_identifier, instance_identifier, subnet_group_name, security_group_ids, engine, instance_class, username, password)
+    if snapshot_identifier is not None:
+        restore_rds_snapshot(snapshot_identifier, instance_identifier, instance_class, subnet_group_name, security_group_ids, engine)
