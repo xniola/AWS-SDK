@@ -1,0 +1,5 @@
+Start date: 2024-01-01
+End date: 2024-01-31
+Data Transfer Usage Quantity: 0 N/A
+Blended Data Transfer Cost: 0 USD
+
