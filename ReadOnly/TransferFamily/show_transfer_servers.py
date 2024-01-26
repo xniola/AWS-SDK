@@ -1,8 +1,8 @@
 import boto3
 
-def list_transfer_servers(aws_profile):
-    # Create a Boto3 session with the specified profile
-    session = boto3.Session(profile_name=aws_profile)
+def list_transfer_servers(aws_profile, aws_region):
+    # Create a Boto3 session with the specified profile and region
+    session = boto3.Session(profile_name=aws_profile, region_name=aws_region)
 
     # Create a Boto3 client for AWS Transfer Family using the session
     transfer_client = session.client('transfer')
@@ -28,6 +28,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="List AWS Transfer Family Servers")
     parser.add_argument("--profile", type=str, required=True, help="AWS CLI profile name")
+    parser.add_argument("--region", type=str, required=True, help="AWS region")
 
     args = parser.parse_args()
-    list_transfer_servers(args.profile)
+    list_transfer_servers(args.profile, args.region)
