@@ -11,7 +11,7 @@ def list_rds_instances(aws_profile):
     try:
         # List RDS instances
         response = rds.describe_db_instances()
-
+        
         # Iterate through the RDS instances and print their details
         for instance in response['DBInstances']:
             print(f"Instance Identifier: {instance['DBInstanceIdentifier']}")
